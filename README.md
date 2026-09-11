@@ -51,6 +51,31 @@ L'état est versionné (`version` dans `AppState`) : `src/store/persistence.ts`
 contient le point d'entrée des migrations, et la couche de stockage peut être
 remplacée par une API distante sans toucher aux composants.
 
+## Déploiement (GitHub Pages)
+
+Le workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
+construit et publie l'application **à chaque push sur `main`** (et à la demande
+depuis l'onglet *Actions*) sur :
+
+<https://aafirmustapha98-web.github.io/FinTracker/>
+
+Le build utilise `/FinTracker/` comme chemin de base — dérivé automatiquement du
+nom du dépôt dans le workflow, et surchargeable en local :
+
+```bash
+VITE_BASE=/FinTracker/ npm run build   # build tel qu'il est publié
+npm run build                          # idem : /FinTracker/ par défaut
+```
+
+La navigation se fait par **ancre** (`.../FinTracker/#/budget`) : chaque page est
+partageable et supporte le rechargement (F5) ainsi que le bouton retour du
+navigateur, sans configuration serveur. Un `404.html` identique à `index.html`
+est publié en filet de sécurité pour les URL profondes, et un fichier
+`.nojekyll` désactive le traitement Jekyll.
+
+À activer une seule fois dans le dépôt : **Settings → Pages → Build and
+deployment → Source : GitHub Actions**.
+
 ## Architecture
 
 Voir [`ARCHITECTURE.md`](ARCHITECTURE.md) pour le modèle de données, les règles
